@@ -6,8 +6,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import java.util.ArrayList;
+
 
 public class SimpleList1Activity extends ActionBarActivity {
 
@@ -16,8 +16,7 @@ public class SimpleList1Activity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_list1);
 
-        ListView listView = (ListView)findViewById(R.id.simple_list1_listView);
-
+        ListView listView = (ListView) findViewById(R.id.simple_List1_listView);
         ArrayList<String> arrayList1 = new ArrayList<String>();
 
         arrayList1.add("데이터1");
@@ -54,5 +53,3 @@ public class SimpleList1Activity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 }
-
-

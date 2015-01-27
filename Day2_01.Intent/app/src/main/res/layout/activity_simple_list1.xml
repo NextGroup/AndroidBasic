@@ -9,7 +9,6 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/simple_list1_listView"
+        android:id="@+id/simple_List1_listView"
         android:layout_weight="1" />
 </LinearLayout>
-

@@ -11,36 +11,35 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="2주차 학습 내용"
         android:id="@+id/textView"
-        android:layout_marginTop="91dp"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="133dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Simple_List1"
+        android:id="@+id/main_button_simple_list1"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="simple_list1"
-        android:id="@+id/main_button_simple_list1"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/main_button_simple_list2"
-        android:layout_alignStart="@+id/main_button_simple_list2" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="simple_list2"
+        android:text="Simple_List2"
         android:id="@+id/main_button_simple_list2"
-        android:layout_marginTop="40dp"
         android:layout_below="@+id/main_button_simple_list1"
-        android:layout_alignLeft="@+id/main_button_custom_list"
-        android:layout_alignStart="@+id/main_button_custom_list" />
+        android:layout_alignLeft="@+id/main_button_simple_list1"
+        android:layout_alignStart="@+id/main_button_simple_list1"
+        android:layout_marginTop="40dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CUSTOM_LIST"
+        android:text="Custom_List"
         android:id="@+id/main_button_custom_list"
         android:layout_marginTop="40dp"
         android:layout_below="@+id/main_button_simple_list2"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_alignLeft="@+id/main_button_simple_list2"
+        android:layout_alignStart="@+id/main_button_simple_list2" />
 </RelativeLayout>

@@ -9,7 +9,6 @@ import android.widget.SimpleAdapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class SimpleList2Activity extends ActionBarActivity {
 
     @Override
@@ -20,16 +19,18 @@ public class SimpleList2Activity extends ActionBarActivity {
         ListView listView = (ListView) findViewById(R.id.simple_list2_listView);
         ArrayList<HashMap<String, String>> hashMapList1 = new ArrayList<HashMap<String, String>>(2);
 
-        for (int i = 0; i < 10; i++){
+        for ( int i= 0; i < 10; i++ ){
             HashMap<String, String> map = new HashMap<String, String>();
-            map.put("line1", "첫 번째 줄의" + i + "번");
-            map.put("line2", "두 번째 줄의" + i + "번");
+            map.put("line1", "첫 번째 줄의 " + i + "번");
+            map.put("line2", "두 번째 줄의 " + i + "번");
             hashMapList1.add(map);
         }
-        String[] from = { "lin1", "lin2" };
+
+        String[] from = {"line1", "line2"};
         int[] to = {android.R.id.text1, android.R.id.text2};
 
-        SimpleAdapter simpleAdapter2 = new SimpleAdapter(this, hashMapList1, android.R.layout.simple_list_item_1, from, to);
+        SimpleAdapter simpleAdapter2 = new SimpleAdapter(this, hashMapList1,
+                android.R.layout.simple_list_item_2, from, to);
         listView.setAdapter(simpleAdapter2);
     }
 
