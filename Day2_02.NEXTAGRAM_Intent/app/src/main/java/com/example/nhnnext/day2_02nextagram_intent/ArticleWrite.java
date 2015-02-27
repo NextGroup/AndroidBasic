@@ -1,6 +1,5 @@
 package com.example.nhnnext.day2_02nextagram_intent;
 
-import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.support.v7.app.ActionBarActivity;
@@ -9,8 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
-
-public class ArticleWrite extends ActionBarActivity implements OnClickListener{
+public class ArticleWrite extends ActionBarActivity implements OnClickListener { //
 
     private Button mButtonUpload;
 
@@ -22,7 +20,6 @@ public class ArticleWrite extends ActionBarActivity implements OnClickListener{
         Button mButtonUpload  = (Button) findViewById(R.id.write_article_button_upload);
         mButtonUpload.setOnClickListener(this);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,14 +42,8 @@ public class ArticleWrite extends ActionBarActivity implements OnClickListener{
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
-    public void onClick(View arg0) {
-        switch (arg0.getId()){
-            case R.id.write_article_button_upload:
-                Intent intentUpload = new Intent(this, ArticleWrite.class);
-                startActivity(intentUpload);
-                break;
-        }
+    public void onClick(View v) {
+
     }
 }

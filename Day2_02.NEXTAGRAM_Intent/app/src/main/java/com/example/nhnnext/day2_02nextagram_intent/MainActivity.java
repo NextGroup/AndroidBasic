@@ -6,18 +6,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
-import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity implements OnClickListener, AdapterView.OnItemClickListener {
+public class MainActivity extends ActionBarActivity implements OnClickListener { // , AdapterView.OnItemClickListener
 
     private Button mButtonWrite;
     private Button mButtonRefresh;
     private ListView mainListView;
-    private ArrayList<Article> articleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +28,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
 
         mainListView = (ListView) findViewById(R.id.main_listView);
 
-        // DB에 JSON데이터를 저장함
-        Dao dao = new Dao(getApplicationContext());
-        String testJasonData = dao.getJsonTestData();
-        dao.insertJsonData(testJasonData);
-
-        // DB로부터 게시글 리스트를 받아옴
-        articleList = dao.getArticleList();
-
-        // CustomAdapter를 적용함
-        CustomAdapter customAdapter = new CustomAdapter(this, R.layout.custom_list_row, articleList);
-        mainListView.setAdapter(customAdapter);
-        mainListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -74,12 +59,5 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
                 startActivity(intentWrite);
                 break;
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this, ArticleView.class);
-        intent.putExtra("ArticleNumber", articleList.get(position).getArticleNumber() + "");
-        startActivity(intent);
     }
 }

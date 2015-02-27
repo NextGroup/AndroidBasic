@@ -17,10 +17,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ArticleWirte"
-            android:label="@string/title_activity_article_wirte" >
-        </activity>
-        <activity
             android:name=".ArticleWrite"
             android:label="@string/title_activity_article_write" >
         </activity>
