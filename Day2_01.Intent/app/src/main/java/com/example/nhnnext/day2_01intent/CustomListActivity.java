@@ -2,14 +2,16 @@ package com.example.nhnnext.day2_01intent;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 
-
-public class CustomListActivity extends ActionBarActivity {
+public class CustomListActivity extends ActionBarActivity implements OnItemClickListener {
 
     private ArrayList<ListData> listDataArray = new ArrayList<ListData>();
 
@@ -36,6 +38,7 @@ public class CustomListActivity extends ActionBarActivity {
         ListView listView = (ListView)findViewById(R.id.custom_list_listView);
         CustomAdapter customAdapter = new CustomAdapter(this, R.layout.custom_list_row, listDataArray);
         listView.setAdapter(customAdapter);
+        listView.setOnItemClickListener(this);
     }
 
 
@@ -58,6 +61,12 @@ public class CustomListActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.i("TEST", position + "번 리스트 선택됨");
+        Log.i("TEST", "리스트 내용" + listDataArray.get(position).getText1());
     }
 }
 
