@@ -26,7 +26,7 @@ public class ArticleView extends ActionBarActivity {
 
         // Dao 초기화
         Dao dao = new Dao(getApplicationContext());
-                                                        // Dao의 데이터 타입이 int이므로 String을 int로 반환
+        // Dao의 데이터 타입이 int이므로 String을 int로 반환
         Article article = dao.getArticleByArticleNumber(Integer.parseInt(articleNumber));
 
         tvTitle.setText(article.getTitle());
