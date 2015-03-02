@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Day4_01.NEXTAGRAM_Network</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_article_view">ArticleView</string>
+    <string name="title_activity_article_write">ArticleWrite</string>
+</resources>
