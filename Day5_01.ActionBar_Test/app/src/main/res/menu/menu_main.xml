@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+    <!--showAsAction을 작성하면 액션바의 형태로 항상 위에 출력-->
+    <!--showAsAction이 없으면 메뉴버튼을 터치 시 나타나는 형태-->
+    <!--“always”는 항상 출력-->
+    <!--“ifRoom|~”은 공간이 남을 때 출력-->
+    <item
+        android:id="@+id/action_item_add"
+        android:icon="@android:drawable/ic_menu_add"
+        app:showAsAction="ifRoom|withText"
+        android:title="Add"/>
+    <item
+        android:id="@+id/action_item_serch"
+        android:icon="@android:drawable/ic_menu_search"
+        app:showAsAction="always"
+        android:title="Action item with icon"/>
+    <item
+        android:id="@+id/action_item_normal"
+        android:title="Normal item"/>
+</menu>
+
+
+
+
