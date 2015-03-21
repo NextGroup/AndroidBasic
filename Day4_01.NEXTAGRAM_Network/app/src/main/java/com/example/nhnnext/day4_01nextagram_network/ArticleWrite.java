@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.os.Bundle;
@@ -16,6 +17,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.provider.MediaStore;
 import android.os.Handler;
+import android.widget.Toast;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import org.apache.http.Header;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -50,13 +54,17 @@ public class ArticleWrite extends ActionBarActivity implements OnClickListener{
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_PHOTO_ALBOM) {
-            Uri uri = getRealPathUri(data.getData());
-            filePath = uri.toString();
-            fileName = uri.getLastPathSegment();
+        try{
+            if(requestCode == REQUEST_PHOTO_ALBOM) {
+                Uri uri = getRealPathUri(data.getData());
+                filePath = uri.toString();
+                fileName = uri.getLastPathSegment();
 
-            Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-            ibPhoto.setImageBitmap(bitmap);
+                Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                ibPhoto.setImageBitmap(bitmap);
+            }
+        } catch (Exception e) {
+            Log.e("test", "onActivityResult ERROR:" + e);
         }
     }
 
@@ -91,21 +99,13 @@ public class ArticleWrite extends ActionBarActivity implements OnClickListener{
             case R.id.write_article_button_upload:
 
                 final Handler handler = new Handler();
+                progressDialog = ProgressDialog.show(ArticleWrite.this, "","업로드 중 입니다.");
 
-                new Thread(){
-                    public void run() {
+                String ID = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                        Settings.Secure.ANDROID_ID);
+                String DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA).format(new Date());
 
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {                                 // "타이틀", "메시지"
-                                progressDialog = ProgressDialog.show(ArticleWrite.this, "","업로드 중 입니다.");
-                            }
-                        });
-
-                        String ID = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                                Settings.Secure.ANDROID_ID);
-                        String DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-                        Article article = new Article(
+                Article article = new Article(
                                 0,          // 게시글 번호. 서버에서 붙여주는 번호이므로 숫자는 중요하지 않음
                                 etTitle.getText().toString(),   // 게시글 정보
                                 etWriter.getText().toString(),  // 글쓴이 이름
@@ -114,19 +114,69 @@ public class ArticleWrite extends ActionBarActivity implements OnClickListener{
                                 DATE,       // 작성 시각
                                 fileName);  // 사진 파일명
 
-                        ProxyUP proxyUP = new ProxyUP();
-                        proxyUP.uploadArticle(article, filePath);
-
-                        handler.post(new Runnable() {
+                ProxyUP.uploadArticle(article, filePath,
+                        new AsyncHttpResponseHandler() {
                             @Override
-                            public void run() {
+                            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                                Log.e("test", "up onSuccess:" + i);
                                 progressDialog.cancel();
+                                Toast.makeText(getApplicationContext(), "onSuccess", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
+                            @Override
+                            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+                                Log.e("test", "up onFailure:" + i);
+                                progressDialog.cancel();
+                                Toast.makeText(getApplicationContext(), "onFailure", Toast.LENGTH_SHORT).show();
+                            }
                         });
-                    }
-                }.start();
                 break;
         }
     }
 }
+
+
+// 아래 주석처리 된 코드는 flask와 LoopJ를 사용하지 않았을 때 진행하는 내용입니다.
+//
+//          case R.id.write_article_button_upload:
+//
+//              final Handler handler = new Handler();
+//
+//                new Thread(){
+//                    public void run() {
+//
+//                        handler.post(new Runnable() {
+//                            @Override
+//                            public void run() {                                 // "타이틀", "메시지"
+//                                progressDialog = ProgressDialog.show(ArticleWrite.this, "","업로드 중 입니다.");
+//                            }
+//                        });
+//
+//                        String ID = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+//                                Settings.Secure.ANDROID_ID);
+//                        String DATE = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.KOREA).format(new Date());
+//                        Article article = new Article(
+//                                0,          // 게시글 번호. 서버에서 붙여주는 번호이므로 숫자는 중요하지 않음
+//                                etTitle.getText().toString(),   // 게시글 정보
+//                                etWriter.getText().toString(),  // 글쓴이 이름
+//                                ID,         // 글쓴이 아이디
+//                                etContent.getText().toString(), // 글 내용
+//                                DATE,       // 작성 시각
+//                                fileName);  // 사진 파일명
+//
+//                        ProxyUP proxyUP = new ProxyUP();
+//                        proxyUP.uploadArticle(article, filePath);
+//
+//                        handler.post(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                progressDialog.cancel();
+//                                finish();
+//                            }
+//                        });
+//                    }
+//                }.start();
+//                break;
+//        }
+//    }
+//}

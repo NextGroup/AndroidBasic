@@ -77,7 +77,7 @@ public class Dao {
                     Log.e("test", "DB ERROR! - " + e);
                     e.printStackTrace();
                 }
-                fileDownloader.downFile("http://10.73.44.93/~stu01/image/" + imgName, imgName);
+                fileDownloader.downFile("127.0.0.1:5009/image/" + imgName, imgName);
             }
         } catch (JSONException e){
             Log.e("test", "JSON ERROR! -" + e);

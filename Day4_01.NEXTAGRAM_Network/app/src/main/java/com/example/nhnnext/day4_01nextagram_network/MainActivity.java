@@ -3,6 +3,7 @@ package com.example.nhnnext.day4_01nextagram_network;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,10 +12,17 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.os.Handler;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+
+import org.apache.http.Header;
+
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener, AdapterView.OnItemClickListener {
 
+    public static String SERVER_ADDRESS = "http://127.0.0.1:5009/";
     private Button mButtonWrite;
     private Button mButtonRefresh;
     private ListView mainListView;
@@ -53,27 +61,53 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
         mainListView.setOnItemClickListener(this);
     }
 
-    private final Handler handler = new Handler();
-    private void refreshData() {
-        new Thread() {
-            public void run () {
-                // 서버로부터 JSON 데이터를 가져옴
-                Proxy proxy = new Proxy();
-                String jsonData = proxy.getJSON();
+    private static AsyncHttpClient client = new AsyncHttpClient();
 
-                // DB에 JSON데이터를 저장함
+    private void refreshData() {
+
+        client.get("http://127.0.0.1:5009/loadData", new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int i, Header[] headers, byte[] bytes) {
+                // DB에 JSON데이터를 저장
+                String jsonData = new String(bytes);
+                Log.i("test", "jsonData: " + jsonData);
+
                 Dao dao = new Dao(getApplicationContext());
                 dao.insertJsonData(jsonData);
 
-                //listView();
-                handler.post(new Runnable(){
-                    public void run() {
-                        listView();
-                    }
-                });
+                listView();
             }
-        }.start();
+
+            @Override
+            public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
+            }
+        });
     }
+
+
+// 아래 주석처리 된 코드는 flask와 LoopJ를 사용하지 않았을 때 진행하는 내용입니다.
+//
+//    private void refreshData() {
+//
+//        new Thread() {
+//            public void run () {
+//                // 서버로부터 JSON 데이터를 가져옴
+//                Proxy proxy = new Proxy();
+//                String jsonData = proxy.getJSON();
+//
+//                // DB에 JSON데이터를 저장함
+//                Dao dao = new Dao(getApplicationContext());
+//                dao.insertJsonData(jsonData);
+//
+//                //listView();
+//                handler.post(new Runnable(){
+//                    public void run() {
+//                        listView();
+//                    }
+//                });
+//            }
+//        }.start();
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -2,15 +2,11 @@ package com.example.nhnnext.day4_01nextagram_network;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.io.File;
-import java.io.InputStream;
 
 public class ArticleView extends ActionBarActivity {
 
