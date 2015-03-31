@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Day5_01.Toolbar_and_Navigation_Drawer</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+</resources>
